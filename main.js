@@ -7,26 +7,43 @@ const textTabTwo = document.getElementById('text2');
 const textTabThree = document.getElementById('text3');
 const textTabFourth = document.getElementById('text4');
 
+const tabCollection = document.querySelectorAll('.tabs .item');
+const tabs = document.getElementById('tabs');
+
 const toggleClass = (el, className) => el.classList.toggle(className);
 const removeClass = (el, className) => el.classList.remove(className);
 const addClass = (el, className) => el.classList.add(className);
 
-tabOne.addEventListener('click', () => {
+const changeTabV2 = (className, ...elements) => {
+  for (let i = 0; i <= elements.length; i++) {
+      console.log(elements[i].classList);
+      if (!elements[i].classList.value.includes(className) ) {
+          addClass(elements[i], className);
+      }
+
+      removeClass(elements[i], className);
+  }
+};
+
+const changeTab = (actualEl, className , ...otherElements) => {
+    addClass(actualEl, className);
+    otherElements.forEach(element => removeClass(element, className));
+};
+
+const changeContent = (actualEl, className, ...otherElements) => {
+    removeClass(actualEl, className);
+    otherElements.forEach(element => addClass(element, className));
+};
+
+tabOne.addEventListener('click', (e) => {
     if (tabOne.classList.value.includes('active')) {
         console.log(tabOne.classList.value.includes('active'));
         return;
     }
-
-    addClass(tabOne, 'active');
-    removeClass(tabTwo, 'active');
-    removeClass(tabThree, 'active');
-    removeClass(tabFourth, 'active');
-
-
-    removeClass(textTabOne, 'd-none');
-    addClass(textTabTwo, 'd-none');
-    addClass(textTabThree, 'd-none');
-    addClass(textTabFourth, 'd-none');
+    console.log(e.target);
+    // changeTabV2('active', tabOne, tabTwo, tabThree, tabFourth);
+    changeTab(tabOne, 'active', tabTwo, tabThree, tabFourth);
+    changeContent(textTabOne, 'd-none', textTabTwo, textTabThree, textTabFourth);
 });
 
 tabTwo.addEventListener('click', () => {
@@ -34,16 +51,8 @@ tabTwo.addEventListener('click', () => {
         console.log('tabTwo', tabTwo.classList.value.includes('active'));
         return;
     }
-
-    removeClass(tabOne, 'active');
-    addClass(tabTwo, 'active');
-    removeClass(tabThree, 'active');
-    removeClass(tabFourth, 'active');
-
-    addClass(textTabOne, 'd-none');
-    removeClass(textTabTwo, 'd-none');
-    addClass(textTabThree, 'd-none');
-    addClass(textTabFourth, 'd-none');
+    changeTab(tabTwo, 'active', tabOne, tabThree, tabFourth);
+    changeContent(textTabTwo, 'd-none', textTabOne, textTabThree, textTabFourth);
 });
 
 tabThree.addEventListener('click', () => {
@@ -51,16 +60,8 @@ tabThree.addEventListener('click', () => {
         console.log('tabThree', tabThree.classList.value.includes('active'));
         return;
     }
-
-    removeClass(tabOne, 'active');
-    removeClass(tabTwo, 'active');
-    addClass(tabThree, 'active');
-    removeClass(tabFourth, 'active');
-
-    addClass(textTabOne, 'd-none');
-    addClass(textTabTwo, 'd-none');
-    removeClass(textTabThree, 'd-none');
-    addClass(textTabFourth, 'd-none');
+    changeTab(tabThree, 'active', tabOne, tabTwo, tabFourth);
+    changeContent(textTabThree, 'd-none', textTabOne, textTabTwo, textTabFourth);
 });
 
 tabFourth.addEventListener('click', () => {
@@ -68,14 +69,46 @@ tabFourth.addEventListener('click', () => {
         console.log('tabFourth', tabFourth.classList.value.includes('active'));
         return;
     }
-
-    removeClass(tabOne, 'active');
-    removeClass(tabTwo, 'active');
-    removeClass(tabThree, 'active');
-    addClass(tabFourth, 'active');
-
-    addClass(textTabOne, 'd-none');
-    addClass(textTabTwo, 'd-none');
-    addClass(textTabThree, 'd-none');
-    removeClass(textTabFourth, 'd-none');
+    changeTab(tabFourth, 'active', tabOne, tabTwo, tabThree);
+    changeContent(textTabFourth, 'd-none', textTabOne, textTabTwo, textTabThree);
 });
+
+
+//
+// const isActive = tag => {
+//     if (tag) {
+//         tag.classList.remove('active')
+//     }
+//
+//     // selectedTag = tag;
+//
+//     tag.classList.add('active');
+// };
+//
+// tabs.addEventListener('click', event => {
+//     console.log(event.target);
+//     let target = event.target;
+//     console.log(target.className);
+//
+//     // if (target.classList.contains('active') ) {
+//     //     console.log(target.classList.value);
+//     //     target.classList.remove('active')
+//     // };
+//
+//     // if (target.classList.contains('active')) {
+//     //     target.classList.remove('active');
+//     // }
+//     //
+//     // target.classList.add('active')
+//
+//     // target.classList.add('active');
+//
+//     if (target.classList.contains('active')) {
+//         console.log(target.classList.contains('active'));
+//         target.classList.remove('active')
+//     } else if (!target.classList.contains('active')) {
+//         console.log(target.classList.contains('active'));
+//         target.classList.add('active');
+//     }
+//
+// });
